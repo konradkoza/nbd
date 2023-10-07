@@ -11,6 +11,10 @@ import java.util.function.Predicate;
 public class ClientManager {
     private Repository<Client> clientRepository;
 
+    public ClientManager() {
+        this.clientRepository = new Repository<Client>();
+    }
+
     public Client getClient(int id){
         return clientRepository.find(client -> client.getId() == id).get(0);
     }

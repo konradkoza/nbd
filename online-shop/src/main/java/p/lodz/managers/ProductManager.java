@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class ProductManager {
-    private Repository<Product> productRepository;
+    private final Repository<Product> productRepository;
+
+    public ProductManager() {
+        this.productRepository = new Repository<Product>();
+    }
 
     public Product getProduct(int id){
         return productRepository.find(product -> product.getId() == id).get(0);
     }
 
-    public Product registerClient(String productName, double baseCost, int numberOfProducts, String desciption){
+    public Product registerProduct(String productName, double baseCost, int numberOfProducts, String desciption){
         int nextID;
         if(productRepository.size() == 0){
             nextID = 0;
@@ -30,7 +34,7 @@ public class ProductManager {
 
     }
 
-    public ArrayList<Product> findAllClients(Predicate<Product> predicate){
+    public ArrayList<Product> findAllProducts(Predicate<Product> predicate){
         Predicate<Product> productPredicate = product -> {
             return predicate.test(product) && !product.isArchived();
         };

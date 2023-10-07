@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.function.Predicate;
 
-public abstract class Repository<T> {
+public class Repository<T> {
     private ArrayList<T> elements;
+
+    public Repository() {
+        this.elements = new ArrayList<T>();
+    }
 
     public T getElement(int number){
         if(number > elements.size()){

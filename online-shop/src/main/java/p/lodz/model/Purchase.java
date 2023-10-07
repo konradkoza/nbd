@@ -1,6 +1,7 @@
 package p.lodz.model;
 
 import java.time.LocalDate;
+import static com.google.common.base.MoreObjects.toStringHelper;
 
 public class Purchase {
 
@@ -18,14 +19,15 @@ public class Purchase {
 
     public Purchase(int purchaseId, Client client, Product product) {
 
+        this.purchaseId = purchaseId;
+        this.client = client;
+        this.product = product;
         purchaseDate = LocalDate.now();
         setDeliveryTime();
         setFinalCost();
         client.addMoneySpent(finalCost);
         //TODO exceptions and values check
-        this.purchaseId = purchaseId;
-        this.client = client;
-        this.product = product;
+
     }
 
     public int getId() {
@@ -60,5 +62,17 @@ public class Purchase {
         finalCost = product.getBaseCost() -
                 product.getBaseCost() * product.getDiscount() -
                 client.getClientDiscount() * product.getBaseCost();
+    }
+
+    @Override
+    public String toString() {
+        return toStringHelper(this)
+                .add("purchaseId", purchaseId)
+                .add("purchaseDate", purchaseDate)
+                .add("deliveryDate", deliveryDate)
+                .add("finalCost", finalCost)
+                .add("client", client)
+                .add("product", product)
+                .toString();
     }
 }

@@ -9,6 +9,10 @@ import java.util.function.Predicate;
 public class PurchaseManager {
     private Repository<Purchase> purchaseRepository;
 
+    public PurchaseManager() {
+        this.purchaseRepository = new Repository<Purchase>();
+    }
+
     public Purchase getPurchase(int id){
         return purchaseRepository.find(purchase -> purchase.getId() == id).get(0);
     }
@@ -22,7 +26,7 @@ public class PurchaseManager {
             nextID = purchaseRepository.getElement(last).getId() + 1 ;
 
         }
-        Purchase newPurchase = new Purchase(nextID,customer, product );
+        Purchase newPurchase = new Purchase(nextID, customer, product);
         purchaseRepository.addElement(newPurchase);
         changeClientType(customer);
         return newPurchase;
