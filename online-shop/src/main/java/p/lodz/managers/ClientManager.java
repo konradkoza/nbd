@@ -3,13 +3,13 @@ package p.lodz.managers;
 import p.lodz.model.Client;
 import p.lodz.model.ClientType;
 import p.lodz.model.Standard;
-import p.lodz.repositiories.ClientRepository;
+import p.lodz.repositiories.Repository;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public class ClientManager {
-    private ClientRepository clientRepository;
+    private Repository<Client> clientRepository;
 
     public Client getClient(int id){
         return clientRepository.find(client -> client.getId() == id).get(0);
@@ -48,6 +48,6 @@ public class ClientManager {
     }
 
     public Client getClientByNumber(int number){
-        return clientRepository.getElement(number); 
+        return clientRepository.getElement(number);
     }
 }
