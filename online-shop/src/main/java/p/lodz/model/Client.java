@@ -11,13 +11,12 @@ public class Client {
 
     private double moneySpent;
 
-    public Client(String firstName, String lastName, int personalId, String city, String street, String number, ClientType clientType, double moneySpent) {
+    public Client(String firstName, String lastName, int personalId, String city, String street, String number, ClientType clientType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.personalId = personalId;
         this.address = new Address(city, street, number);
         this.clientType = clientType;
-        this.moneySpent = moneySpent;
         //TODO EXCEPTIONS
     }
 
