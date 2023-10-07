@@ -1,6 +1,4 @@
-package p.lodz;
-
-import java.util.UUID;
+package p.lodz.model;
 
 public class Client {
     private String firstName;
@@ -23,7 +21,7 @@ public class Client {
         //TODO EXCEPTIONS
     }
 
-    public int getPersonalId() {
+    public int getId() {
         return personalId;
     }
 
@@ -86,5 +84,9 @@ public class Client {
 
     public void setMoneySpent(double moneySpent) {
         this.moneySpent = moneySpent;
+    }
+
+    public void addMoneySpent(double value){
+        moneySpent += value;
     }
 }

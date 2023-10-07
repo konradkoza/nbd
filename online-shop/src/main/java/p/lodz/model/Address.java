@@ -1,4 +1,4 @@
-package p.lodz;
+package p.lodz.model;
 
 public class Address {
     private String city;
