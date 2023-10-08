@@ -27,7 +27,12 @@ public class Purchase {
         setFinalCost();
         client.addMoneySpent(finalCost);
         //TODO exceptions and values check
-
+        if(product.isArchived()){
+            throw new RuntimeException("Product out of stock");
+        }else product.reduceNumberOfProducts();
+        if(purchaseId < 0 ){
+            throw new RuntimeException("ID cannot be negative number");
+        }
     }
 
     public int getId() {
