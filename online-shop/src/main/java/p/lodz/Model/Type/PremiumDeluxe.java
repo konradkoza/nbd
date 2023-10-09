@@ -1,4 +1,4 @@
-package p.lodz.model;
+package p.lodz.Model.Type;
 
 public class PremiumDeluxe implements ClientType{
 

@@ -1,4 +1,6 @@
-package p.lodz.model;
+package p.lodz.Model;
+
+import p.lodz.Model.Type.ClientType;
 
 public class Client {
     private String firstName;

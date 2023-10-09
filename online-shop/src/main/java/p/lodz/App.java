@@ -1,10 +1,11 @@
-package p.lodz.Model;
+package p.lodz;
 
-/**
- * Hello world!
- *
- */
-public class App 
+import p.lodz.Model.Client;
+import p.lodz.Model.Product;
+import p.lodz.Model.Purchase;
+import p.lodz.Model.Shop;
+
+public class App
 {
     public static void main( String[] args )
     {

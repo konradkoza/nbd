@@ -1,6 +1,6 @@
-package p.lodz.repositiories;
+package p.lodz.Repositiories;
 
-import p.lodz.model.Product;
+import p.lodz.Model.Product;
 
 public class ProductRepository extends Repository<Product>{
 }

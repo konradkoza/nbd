@@ -1,4 +1,4 @@
-package p.lodz.model;
+package p.lodz.Model;
 
 import java.time.LocalDate;
 import static com.google.common.base.MoreObjects.toStringHelper;

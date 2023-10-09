@@ -1,8 +1,8 @@
-package p.lodz.managers;
+package p.lodz.Managers;
 
 
-import p.lodz.model.Product;
-import p.lodz.repositiories.Repository;
+import p.lodz.Model.Product;
+import p.lodz.Repositiories.Repository;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;

@@ -1,4 +1,4 @@
-package p.lodz.model;
+package p.lodz.Model;
 
 public class Product {
     private String productName;

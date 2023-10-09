@@ -1,9 +1,9 @@
-package p.lodz.managers;
+package p.lodz.Managers;
 
-import p.lodz.model.Client;
-import p.lodz.model.ClientType;
-import p.lodz.model.Standard;
-import p.lodz.repositiories.Repository;
+import p.lodz.Model.Client;
+import p.lodz.Model.Type.ClientType;
+import p.lodz.Model.Type.Standard;
+import p.lodz.Repositiories.Repository;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;

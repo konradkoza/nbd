@@ -1,6 +1,6 @@
-package p.lodz.repositiories;
+package p.lodz.Repositiories;
 
-import p.lodz.model.Client;
+import p.lodz.Model.Client;
 
 public class ClientRepository extends Repository<Client>{
 }

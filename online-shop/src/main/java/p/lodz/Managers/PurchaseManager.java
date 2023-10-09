@@ -1,7 +1,10 @@
-package p.lodz.managers;
+package p.lodz.Managers;
 
-import p.lodz.model.*;
-import p.lodz.repositiories.Repository;
+import p.lodz.Model.*;
+import p.lodz.Model.Type.ClientType;
+import p.lodz.Model.Type.Premium;
+import p.lodz.Model.Type.PremiumDeluxe;
+import p.lodz.Repositiories.Repository;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;

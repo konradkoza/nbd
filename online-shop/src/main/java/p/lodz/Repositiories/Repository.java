@@ -1,7 +1,6 @@
-package p.lodz.repositiories;
+package p.lodz.Repositiories;
 
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.function.Predicate;
 
 public class Repository<T> {

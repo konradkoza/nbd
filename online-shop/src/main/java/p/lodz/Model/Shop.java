@@ -1,8 +1,8 @@
-package p.lodz.model;
+package p.lodz.Model;
 
-import p.lodz.managers.ClientManager;
-import p.lodz.managers.ProductManager;
-import p.lodz.managers.PurchaseManager;
+import p.lodz.Managers.ClientManager;
+import p.lodz.Managers.ProductManager;
+import p.lodz.Managers.PurchaseManager;
 
 public class Shop {
     private final ClientManager clientManager = new ClientManager();
