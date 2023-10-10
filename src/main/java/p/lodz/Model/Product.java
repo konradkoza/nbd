@@ -1,76 +1,39 @@
 package p.lodz.Model;
 
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@NoArgsConstructor
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "product_name")
     private String productName;
-
-    private int productId;
+    @Column(name = "base_cost")
     private double baseCost;
-
+    @Column(name = "discount")
     private double discount;
-
-    private boolean isArchived = false;
-
+    @Column(name = "archived")
+    private boolean archived = false;
+    @Column(name = "nuber_of_products")
     private int numberOfProducts;
-
+    @Column(name = "description")
     private String desciption;
 
-    public Product(String productName, int productId, double baseCost, int numberOfProducts, String desciption) {
+    public Product(String productName, Long id, double baseCost, int numberOfProducts, String desciption) {
         this.productName = productName;
-        this.productId = productId;
+        this.id = id;
         this.baseCost = baseCost;
         this.numberOfProducts = numberOfProducts;
-        this.desciption = desciption;
-    }
-
-    public int getId() {
-        return productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public double getBaseCost() {
-        return baseCost;
-    }
-
-    public void setBaseCost(double baseCost) {
-        this.baseCost = baseCost;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public boolean isArchived() {
-        return isArchived;
-    }
-
-    public void setArchived(boolean archived) {
-        isArchived = archived;
-    }
-
-    public int getNumberOfProducts() {
-        return numberOfProducts;
-    }
-
-    public void setNumberOfProducts(int numberOfProducts) {
-        this.numberOfProducts = numberOfProducts;
-    }
-
-    public String getDesciption() {
-        return desciption;
-    }
-
-    public void setDesciption(String desciption) {
         this.desciption = desciption;
     }
 

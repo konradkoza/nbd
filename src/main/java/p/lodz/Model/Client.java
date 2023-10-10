@@ -1,11 +1,15 @@
 package p.lodz.Model;
 
+import lombok.Getter;
+import lombok.Setter;
 import p.lodz.Model.Type.ClientType;
 
+@Getter
+@Setter
 public class Client {
     private String firstName;
     private String lastName;
-    private final int personalId;
+    private final int id;
     Address address;
     ClientType clientType;
 
@@ -13,17 +17,12 @@ public class Client {
 
     private double moneySpent;
 
-    public Client(String firstName, String lastName, int personalId, String city, String street, String number, ClientType clientType) {
+    public Client(String firstName, String lastName, int id, String city, String street, String number, ClientType clientType) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.personalId = personalId;
+        this.id = id;
         this.address = new Address(city, street, number);
         this.clientType = clientType;
-        //TODO EXCEPTIONS
-    }
-
-    public int getId() {
-        return personalId;
     }
 
     public String getStreet(){
@@ -44,47 +43,6 @@ public class Client {
 
     public int getClientShorterDeliveryTime(){
         return clientType.getShorterDeliveryTime();
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    //TODO sprawdzenie poprawnosci w setterach
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public ClientType getClientType() {
-        return clientType;
-    }
-
-    public void setClientType(ClientType clientType) {
-        this.clientType = clientType;
-    }
-
-    public boolean isArchived() {
-        return archived;
-    }
-
-    public void setArchived(boolean archived) {
-        this.archived = archived;
-    }
-
-    public double getMoneySpent() {
-        return moneySpent;
-    }
-
-    public void setMoneySpent(double moneySpent) {
-        this.moneySpent = moneySpent;
     }
 
     public void addMoneySpent(double value){

@@ -19,9 +19,9 @@ public class ProductManager {
     }
 
     public Product registerProduct(String productName, double baseCost, int numberOfProducts, String desciption){
-        int nextID;
+        long nextID;
         if(productRepository.size() == 0){
-            nextID = 0;
+            nextID = 0L;
         }else {
             int last = productRepository.size() - 1 ;
             nextID = productRepository.getElement(last).getId() + 1 ;
