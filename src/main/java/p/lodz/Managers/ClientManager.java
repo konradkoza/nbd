@@ -20,7 +20,7 @@ public class ClientManager {
     }
 
     public Client registerClient(String firstName, String lastName, String city, String street, String number){
-        int nextID;
+        long nextID;
         if(clientRepository.size() == 0){
             nextID = 0;
         }else {
@@ -29,10 +29,10 @@ public class ClientManager {
 
         }
         ClientType standard = new Standard();
-        Client newClient = new Client(firstName, lastName, nextID, city, street, number, standard);
-        clientRepository.addElement(newClient);
-
-        return newClient;
+//        Client newClient = new Client(firstName, lastName, nextID, city, street, number, standard);
+//        clientRepository.addElement(newClient);
+        return null;
+//        return newClient;
 
     }
 
