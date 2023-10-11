@@ -37,18 +37,6 @@ public class Client {
         this.clientType = clientType;
     }
 
-    public String getStreet(){
-        return address.getStreet();
-    }
-
-    public String getCity(){
-        return address.getCity();
-    }
-
-    public String getNumber(){
-        return address.getNumber();
-    }
-
     public double getClientDiscount(){
         return clientType.getClientDiscount();
     }
