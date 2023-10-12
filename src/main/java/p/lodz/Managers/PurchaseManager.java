@@ -7,6 +7,7 @@ import p.lodz.Model.Type.PremiumDeluxe;
 import p.lodz.Repositiories.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class PurchaseManager {
@@ -20,8 +21,8 @@ public class PurchaseManager {
         return purchaseRepository.find(purchase -> purchase.getId() == id).get(0);
     }
 
-    public Purchase registerPurchase(Client customer, Product product){
-        int nextID;
+    public Purchase registerPurchase(Client customer, List<Product> products){
+        long nextID;
         if(purchaseRepository.size() == 0){
             nextID = 0;
         }else {
@@ -29,7 +30,7 @@ public class PurchaseManager {
             nextID = purchaseRepository.getElement(last).getId() + 1 ;
 
         }
-        Purchase newPurchase = new Purchase(nextID, customer, product);
+        Purchase newPurchase = new Purchase(nextID, customer, products);
         purchaseRepository.addElement(newPurchase);
         changeClientType(customer);
         return newPurchase;
@@ -55,12 +56,12 @@ public class PurchaseManager {
         return purchaseRepository.find(purchasePredicate);
     }
 
-    public ArrayList<Purchase> getAllProductPurchases(Product product){
-        Predicate<Purchase> purchasePredicate = purchase -> {
-            return purchase.getProduct() == product;
-        };
-        return purchaseRepository.find(purchasePredicate);
-    }
+//    public ArrayList<Purchase> getAllProductPurchases(Product product){
+//        Predicate<Purchase> purchasePredicate = purchase -> {
+//            return purchase.getProduct() == product;
+//        };
+//        return purchaseRepository.find(purchasePredicate);
+//    }
 
     public double checkClientMoneySpent(Client client){
         return client.getMoneySpent();
@@ -68,10 +69,6 @@ public class PurchaseManager {
 
     private void changeClientType(Client client){
         double money = client.getMoneySpent();
-//        if(money <= 500.0  ) {
-//            ClientType standard = new Standard();
-//            client.setClientType(standard);
-//        } else
         if(money <= 1000.0 && money > 500) {
             ClientType premium = new Premium();
            client.setClientType(premium);
