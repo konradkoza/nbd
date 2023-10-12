@@ -6,7 +6,6 @@
   <persistence-unit name="test">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>p.lodz.Model.Product</class>
-    <class>p.lodz.Model.Address</class>
     <class>p.lodz.Model.Client</class>
     <class>p.lodz.Model.Type.ClientType</class>
       <properties>

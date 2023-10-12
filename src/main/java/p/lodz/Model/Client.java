@@ -19,7 +19,7 @@ public class Client {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToOne
+    @Embedded
     Address address;
 
     @OneToOne

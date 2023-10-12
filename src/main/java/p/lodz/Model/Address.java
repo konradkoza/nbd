@@ -1,20 +1,14 @@
 package p.lodz.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Entity
 @NoArgsConstructor
+@Embeddable
+@Access(AccessType.FIELD)
 public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     private String city;
     private String street;
     private String number;
@@ -23,8 +17,7 @@ public class Address {
         return city + " " + street + " " + number;
     }
 
-    public Address(Long id, String city, String street, String number) {
-        this.id = id;
+    public Address(String city, String street, String number) {
         this.city = city;
         this.street = street;
         this.number = number;

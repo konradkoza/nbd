@@ -14,7 +14,7 @@ public class App {
         Product test = sklep.getProductManager().registerProduct("test", 100, 1, "test");
         Product test1 = sklep.getProductManager().registerProduct("test1", 100, 10, "test");
         Product test2 = sklep.getProductManager().registerProduct("test2", 100, 10, "test");
-        Address address = new Address(1L, "Warszawa", "aaa", "777");
+        Address address = new Address("Warszawa", "aaa", "777");
         ClientType clientType = new Standard();
         Client jan = new Client(1L, "Jan", "Kowalski", address, clientType);
         Purchase zakup =  sklep.getPurchaseManager().registerPurchase(jan, test);
@@ -28,7 +28,6 @@ public class App {
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
             em.merge(test);
-            em.merge(address);
             em.merge(clientType);
             em.merge(jan);
             em.getTransaction().commit();
