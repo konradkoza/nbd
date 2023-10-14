@@ -26,7 +26,7 @@ public class Purchase {
     @Column(name = "final_cost")
     private double finalCost;
 
-    @OneToOne
+    @ManyToOne
     private Client client;
 
     @ManyToMany

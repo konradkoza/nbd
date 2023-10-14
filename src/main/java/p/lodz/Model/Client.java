@@ -22,7 +22,7 @@ public class Client {
     @Embedded
     Address address;
 
-    @OneToOne
+    @ManyToOne
     ClientType clientType;
 
     private boolean archived = false;
