@@ -1,6 +1,7 @@
 package p.lodz.Repositiories.Implementations;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import p.lodz.Model.Client;
 import p.lodz.Model.Purchase;
@@ -12,6 +13,17 @@ public class PurchaseRepositoryImpl implements PurchaseRepository {
     private final EntityManager em;
     public PurchaseRepositoryImpl(EntityManager em) {
         this.em = em;
+    }
+
+    @Override
+    public Purchase findPurchaseById(Long id) {
+        return em.find(Purchase.class, id);
+    }
+
+    @Override
+    public List<Purchase> findAllPurchases() {
+        Query query = em.createQuery("SELECT p FROM Purchase p");
+        return query.getResultList();
     }
 
     @Override

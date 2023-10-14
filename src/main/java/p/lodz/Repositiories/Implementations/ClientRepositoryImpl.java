@@ -1,8 +1,11 @@
 package p.lodz.Repositiories.Implementations;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import p.lodz.Model.Client;
 import p.lodz.Repositiories.ClientRepository;
+
+import java.util.List;
 
 public class ClientRepositoryImpl implements ClientRepository {
     private final EntityManager em;
@@ -25,5 +28,16 @@ public class ClientRepositoryImpl implements ClientRepository {
             em.merge(client);
         }
         return client;
+    }
+
+    @Override
+    public Client findClientById(Long id) {
+        return em.find(Client.class, id);
+    }
+
+    @Override
+    public List<Client> findAllClients() {
+        Query query = em.createQuery("SELECT c FROM Client c");
+        return query.getResultList();
     }
 }

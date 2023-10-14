@@ -1,57 +1,36 @@
 package p.lodz.Managers;
 
+import jakarta.persistence.EntityManager;
+import p.lodz.Model.Address;
 import p.lodz.Model.Client;
 import p.lodz.Model.Type.ClientType;
-import p.lodz.Model.Type.Standard;
-import p.lodz.Repositiories.Repository;
+import p.lodz.Repositiories.ClientRepository;
+import p.lodz.Repositiories.Implementations.ClientRepositoryImpl;
 
-import java.util.ArrayList;
-import java.util.function.Predicate;
+import java.util.List;
 
 public class ClientManager {
-    private Repository<Client> clientRepository;
+    private final ClientRepository clientRepository;
 
-    public ClientManager() {
-        this.clientRepository = new Repository<Client>();
+    public ClientManager(EntityManager em) {
+        this.clientRepository = new ClientRepositoryImpl(em);
     }
 
-    public Client getClient(int id){
-        return clientRepository.find(client -> client.getId() == id).get(0);
+    public Client getClient(Long id){
+        return clientRepository.findClientById(id);
     }
 
-    public Client registerClient(String firstName, String lastName, String city, String street, String number){
-        long nextID;
-        if(clientRepository.size() == 0){
-            nextID = 0;
-        }else {
-            int last = clientRepository.size() - 1 ;
-            nextID = clientRepository.getElement(last).getId() + 1 ;
-
-        }
-        ClientType standard = new Standard();
-//        Client newClient = new Client(firstName, lastName, nextID, city, street, number, standard);
-//        clientRepository.addElement(newClient);
-        return null;
-//        return newClient;
-
+    public Client registerClient(String firstName, String lastName, String city, String street, String number, ClientType clientType){
+        Address address = new Address(city, street, number);
+        Client client = new Client(firstName, lastName, address, clientType);
+        return clientRepository.saveClient(client);
     }
 
-    public ArrayList<Client> findAllClients(Predicate<Client> predicate){
-        Predicate<Client> clientPredicate = client -> {
-            return predicate.test(client) && !client.isArchived();
-        };
-        return clientRepository.find(clientPredicate);
+    public List<Client> getAllClients() {
+        return clientRepository.findAllClients();
     }
 
-    public ArrayList<Client> findAllClients() {
-        return clientRepository.findAll();
-    }
-
-    public void unregister(int id){
-        getClient(id).setArchived(true);
-    }
-
-    public Client getClientByNumber(int number){
-        return clientRepository.getElement(number);
+    public Client unregister(Long id){
+        return clientRepository.archiveClient(id);
     }
 }
