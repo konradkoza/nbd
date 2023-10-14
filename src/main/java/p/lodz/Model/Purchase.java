@@ -32,8 +32,7 @@ public class Purchase {
     @ManyToMany
     private List<Product> products;
 
-    public Purchase(Long id, Client client, List<Product> products) {
-        this.id = id;
+    public Purchase(Client client, List<Product> products) {
         this.client = client;
         this.products = products;
         purchaseDate = LocalDate.now();

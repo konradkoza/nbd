@@ -22,15 +22,15 @@ public class PurchaseManager {
     }
 
     public Purchase registerPurchase(Client customer, List<Product> products){
-        long nextID;
+        long nextID = 0L;
         if(purchaseRepository.size() == 0){
             nextID = 0;
         }else {
             int last = purchaseRepository.size() - 1 ;
-            nextID = purchaseRepository.getElement(last).getId() + 1 ;
+//            nextID = purchaseRepository.getElement(last).getId() + 1 ;
 
         }
-        Purchase newPurchase = new Purchase(nextID, customer, products);
+        Purchase newPurchase = new Purchase(customer, products);
         purchaseRepository.addElement(newPurchase);
         changeClientType(customer);
         return newPurchase;
