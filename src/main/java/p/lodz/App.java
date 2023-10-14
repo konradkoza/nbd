@@ -8,6 +8,8 @@ import p.lodz.Model.*;
 import p.lodz.Model.Type.ClientType;
 import p.lodz.Model.Type.Premium;
 import p.lodz.Model.Type.Standard;
+import p.lodz.Repositiories.ClientRepository;
+import p.lodz.Repositiories.Implementations.ClientRepositoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,8 @@ public class App {
         Address address = new Address("Warszawa", "aaa", "777");
         ClientType clientType = new Standard();
         ClientType clientType1 = new Premium();
-        Client jan = new Client(1L, "Jan", "Kowalski", address, clientType);
-        Client jan1 = new Client(2L, "Jan", "Kowalski", address, clientType1);
+        Client jan = new Client("Jan", "Kowalski", address, clientType);
+        Client jan1 = new Client("Jan", "Kowalski", address, clientType1);
         List<Product> products = new ArrayList<>();
         products.add(test);
         products.add(test1);
@@ -34,14 +36,15 @@ public class App {
 
         try(EntityManagerFactory emf = Persistence.createEntityManagerFactory("test")) {
             EntityManager em = emf.createEntityManager();
+            ClientRepository clientRepository = new ClientRepositoryImpl(em);
+            clientRepository.saveClient(jan);
+            clientRepository.saveClient(jan1);
             em.getTransaction().begin();
             em.merge(test);
             em.merge(test1);
             em.merge(test2);
             em.merge(clientType);
             em.merge(clientType1);
-            em.merge(jan);
-            em.merge(jan1);
             em.merge(zakup1);
             em.merge(zakup);
             em.getTransaction().commit();

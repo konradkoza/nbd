@@ -1,6 +1,7 @@
 package p.lodz;
 
 import org.junit.jupiter.api.Test;
+import p.lodz.Model.Address;
 import p.lodz.Model.Client;
 import p.lodz.Model.Type.ClientType;
 import p.lodz.Model.Type.Premium;
@@ -14,7 +15,7 @@ public class ClientTest {
     private final String testLastName2 = "Byl";
     private final int testPersonalID1 = 01234567;
     private ClientType clientType = new Premium();
-    private Client testClient1 =  new Client(testFirstName1, testLastName1, testPersonalID1, "Poznan", "Krotka", "11",clientType);
+    private Client testClient1 =  new Client(testFirstName1, testLastName1, new Address("aaa", "bbb", "ccc"),clientType);
 
 
 

@@ -27,7 +27,7 @@ public class ProductManager {
             nextID = productRepository.getElement(last).getId() + 1 ;
 
         }
-        Product newProduct = new Product(productName, nextID, baseCost, numberOfProducts, desciption);
+        Product newProduct = new Product(productName, baseCost, numberOfProducts, desciption);
         productRepository.addElement(newProduct);
 
         return newProduct;

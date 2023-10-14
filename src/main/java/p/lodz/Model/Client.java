@@ -29,10 +29,9 @@ public class Client {
 
     private double moneySpent;
 
-    public Client(long id, String firstName, String lastName, Address address, ClientType clientType) {
+    public Client(String firstName, String lastName, Address address, ClientType clientType) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
         this.address = address;
         this.clientType = clientType;
     }
