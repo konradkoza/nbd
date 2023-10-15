@@ -7,6 +7,7 @@ import p.lodz.Model.Type.PremiumDeluxe;
 import p.lodz.Repositiories.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class PurchaseManager {
@@ -20,8 +21,8 @@ public class PurchaseManager {
         return purchaseRepository.find(purchase -> purchase.getId() == id).get(0);
     }
 
-    public Purchase registerPurchase(Client customer, Product product){
-        int nextID;
+    public Purchase registerPurchase(Client customer, List<Product> products){
+        long nextID;
         if(purchaseRepository.size() == 0){
             nextID = 0;
         }else {
@@ -29,7 +30,7 @@ public class PurchaseManager {
             nextID = purchaseRepository.getElement(last).getId() + 1 ;
 
         }
-        Purchase newPurchase = new Purchase(nextID, customer, product);
+        Purchase newPurchase = new Purchase(nextID, customer, products);
         purchaseRepository.addElement(newPurchase);
         changeClientType(customer);
         return newPurchase;
@@ -57,7 +58,7 @@ public class PurchaseManager {
 
     public ArrayList<Purchase> getAllProductPurchases(Product product){
         Predicate<Purchase> purchasePredicate = purchase -> {
-            return purchase.getProduct() == product;
+            return purchase.getProducts() == product;
         };
         return purchaseRepository.find(purchasePredicate);
     }

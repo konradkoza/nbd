@@ -1,6 +1,11 @@
 package p.lodz.Model.Type;
 
-public class PremiumDeluxe implements ClientType{
+import jakarta.persistence.*;
+
+@Entity
+@DiscriminatorValue( "premium_deluxe")
+@Access(AccessType.FIELD)
+public class PremiumDeluxe extends ClientType{
 
     @Override
     public double getClientDiscount() {

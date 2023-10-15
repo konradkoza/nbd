@@ -1,6 +1,12 @@
 package p.lodz.Model.Type;
 
-public class Premium implements ClientType {
+import jakarta.persistence.*;
+
+@Entity
+@DiscriminatorValue( "premium")
+@Access(AccessType.FIELD)
+public class Premium extends ClientType {
+
 
     @Override
     public double getClientDiscount() {
@@ -11,4 +17,5 @@ public class Premium implements ClientType {
     public int getShorterDeliveryTime() {
         return 1;
     }
+
 }

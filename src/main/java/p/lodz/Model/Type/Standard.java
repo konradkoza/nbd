@@ -1,6 +1,13 @@
 package p.lodz.Model.Type;
 
-public class Standard implements ClientType{
+import jakarta.persistence.*;
+import p.lodz.Model.Client;
+
+@Entity
+@Access(AccessType.FIELD)
+@DiscriminatorValue("standard")
+public class Standard extends ClientType{
+
 
     @Override
     public double getClientDiscount() {
@@ -11,4 +18,5 @@ public class Standard implements ClientType{
     public int getShorterDeliveryTime() {
         return 0;
     }
+
 }

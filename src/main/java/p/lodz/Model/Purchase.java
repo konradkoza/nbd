@@ -1,62 +1,45 @@
 package p.lodz.Model;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
+import java.util.List;
+
 import static com.google.common.base.MoreObjects.toStringHelper;
 
+@Getter
+@Entity
+@NoArgsConstructor
 public class Purchase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private int purchaseId;
-
+    @Column(name = "purchase_date")
     private LocalDate purchaseDate;
 
+    @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 
+    @Column(name = "final_cost")
     private double finalCost;
 
+    @OneToOne
     private Client client;
 
-    private Product product;
+    @ManyToMany
+    private List<Product> products;
 
-    public Purchase(int purchaseId, Client client, Product product) {
-
-        this.purchaseId = purchaseId;
+    public Purchase(Long id, Client client, List<Product> products) {
+        this.id = id;
         this.client = client;
-        this.product = product;
+        this.products = products;
         purchaseDate = LocalDate.now();
         setDeliveryTime();
         setFinalCost();
         client.addMoneySpent(finalCost);
-        //TODO exceptions and values check
-        if(product.isArchived()){
-            throw new RuntimeException("Product out of stock");
-        }else product.reduceNumberOfProducts();
-        if(purchaseId < 0 ){
-            throw new RuntimeException("ID cannot be negative number");
-        }
-    }
-
-    public int getId() {
-        return purchaseId;
-    }
-
-    public LocalDate getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public LocalDate getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public double getFinalCost() {
-        return finalCost;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public Product getProduct() {
-        return product;
     }
 
     private void setDeliveryTime(){
@@ -64,20 +47,22 @@ public class Purchase {
     }
 
     private void setFinalCost(){
-        finalCost = product.getBaseCost() -
-                product.getBaseCost() * product.getDiscount() -
-                client.getClientDiscount() * product.getBaseCost();
+        for(Product product : products) {
+            finalCost += product.getBaseCost() -
+                    product.getBaseCost() * product.getDiscount() -
+                    client.getClientDiscount() * product.getBaseCost();
+        }
     }
 
     @Override
     public String toString() {
         return toStringHelper(this)
-                .add("purchaseId", purchaseId)
+                .add("purchaseId", id)
                 .add("purchaseDate", purchaseDate)
                 .add("deliveryDate", deliveryDate)
                 .add("finalCost", finalCost)
                 .add("client", client)
-                .add("product", product)
+                .add("product", products)
                 .toString();
     }
 }
