@@ -1,6 +1,13 @@
 package p.lodz.Repositiories;
 
+import p.lodz.Model.Client;
 import p.lodz.Model.Purchase;
 
-public class PurchaseRepository extends Repository<Purchase>{
+import java.util.List;
+
+public interface PurchaseRepository {
+    Purchase findPurchaseById(Long id);
+    List<Purchase> findAllPurchases();
+    Purchase savePurchase(Purchase purchase);
+    List<Purchase> findAllClientPurchases(Client client);
 }

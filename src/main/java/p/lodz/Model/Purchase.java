@@ -26,14 +26,13 @@ public class Purchase {
     @Column(name = "final_cost")
     private double finalCost;
 
-    @OneToOne
+    @ManyToOne
     private Client client;
 
     @ManyToMany
     private List<Product> products;
 
-    public Purchase(Long id, Client client, List<Product> products) {
-        this.id = id;
+    public Purchase(Client client, List<Product> products) {
         this.client = client;
         this.products = products;
         purchaseDate = LocalDate.now();

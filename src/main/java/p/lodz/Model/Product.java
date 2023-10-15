@@ -29,9 +29,8 @@ public class Product {
     @Column(name = "description")
     private String desciption;
 
-    public Product(String productName, Long id, double baseCost, int numberOfProducts, String desciption) {
+    public Product(String productName, double baseCost, int numberOfProducts, String desciption) {
         this.productName = productName;
-        this.id = id;
         this.baseCost = baseCost;
         this.numberOfProducts = numberOfProducts;
         this.desciption = desciption;

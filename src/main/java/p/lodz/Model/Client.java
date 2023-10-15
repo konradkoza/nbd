@@ -3,40 +3,35 @@ package p.lodz.Model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import p.lodz.Model.Type.ClientType;
 
 @Getter
 @Setter
-@Access(AccessType.FIELD)
 @Entity
-@Table(name = "Client")
 @NoArgsConstructor
 public class Client {
-
-    @Column(name="firstName")
-    private String firstName;
-    @Column(name="lastName")
-    private String lastName;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  long id;
+    private Long id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+
     @Embedded
     Address address;
-    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "client_type_id")
-    @NonNull
+
+    @ManyToOne
     ClientType clientType;
-    @Column(name = "is_Archived")
+
     private boolean archived = false;
-    @Column(name = "money_spend")
+
     private double moneySpent;
 
-    public Client(long id, String firstName, String lastName, Address address, ClientType clientType) {
+    public Client(String firstName, String lastName, Address address, ClientType clientType) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
         this.address = address;
         this.clientType = clientType;
     }

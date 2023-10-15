@@ -1,0 +1,43 @@
+package p.lodz.Repositiories.Implementations;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import p.lodz.Model.Client;
+import p.lodz.Repositiories.ClientRepository;
+
+import java.util.List;
+
+public class ClientRepositoryImpl implements ClientRepository {
+    private final EntityManager em;
+    public ClientRepositoryImpl(EntityManager em) {
+        this.em = em;
+    }
+
+    @Override
+    public Client saveClient(Client client) {
+        if(client.getId() == null) em.persist(client);
+        else client = em.merge(client);
+        return client;
+    }
+
+    @Override
+    public Client archiveClient(Long id) {
+        Client client = em.find(Client.class, id);
+        if (client != null) {
+            client.setArchived(true);
+            em.merge(client);
+        }
+        return client;
+    }
+
+    @Override
+    public Client findClientById(Long id) {
+        return em.find(Client.class, id);
+    }
+
+    @Override
+    public List<Client> findAllClients() {
+        Query query = em.createQuery("SELECT c FROM Client c");
+        return query.getResultList();
+    }
+}

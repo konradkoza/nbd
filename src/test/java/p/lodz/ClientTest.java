@@ -1,6 +1,7 @@
 package p.lodz;
 
 import org.junit.jupiter.api.Test;
+import p.lodz.Model.Address;
 import p.lodz.Model.Client;
 import p.lodz.Model.Type.ClientType;
 import p.lodz.Model.Type.Premium;
@@ -12,9 +13,8 @@ public class ClientTest {
     private final String testLastName1 = "Jest";
     private final String testFirstName2 = "Konrad";
     private final String testLastName2 = "Byl";
-    private final int testPersonalID1 = 01234567;
     private ClientType clientType = new Premium();
-    private Client testClient1 =  new Client(testFirstName1, testLastName1, testPersonalID1, "Poznan", "Krotka", "11",clientType);
+    private Client testClient1 =  new Client(testFirstName1, testLastName1, new Address("aaa", "bbb", "ccc"),clientType);
 
 
 
@@ -22,7 +22,6 @@ public class ClientTest {
     public void clientConstructorTest() {
         assertEquals(testFirstName1, testClient1.getFirstName());
         assertEquals(testLastName1, testClient1.getLastName());
-        assertEquals(testPersonalID1, testClient1.getId());
         assertFalse(testClient1.isArchived());
     }
 

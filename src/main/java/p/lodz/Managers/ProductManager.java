@@ -1,56 +1,35 @@
 package p.lodz.Managers;
 
 
+import jakarta.persistence.EntityManager;
 import p.lodz.Model.Product;
-import p.lodz.Repositiories.Repository;
+import p.lodz.Repositiories.Implementations.ProductRepositoryImpl;
+import p.lodz.Repositiories.ProductRepository;
 
-import java.util.ArrayList;
-import java.util.function.Predicate;
+import java.util.List;
 
 public class ProductManager {
-    private final Repository<Product> productRepository;
-
-    public ProductManager() {
-        this.productRepository = new Repository<Product>();
+    private final ProductRepository productRepository;
+    public ProductManager(EntityManager em) {
+        this.productRepository = new ProductRepositoryImpl(em);
     }
 
-    public Product getProduct(int id){
-        return productRepository.find(product -> product.getId() == id).get(0);
+    public Product getProduct(Long id){
+        return productRepository.findProductById(id);
     }
 
     public Product registerProduct(String productName, double baseCost, int numberOfProducts, String desciption){
-        long nextID;
-        if(productRepository.size() == 0){
-            nextID = 0L;
-        }else {
-            int last = productRepository.size() - 1 ;
-            nextID = productRepository.getElement(last).getId() + 1 ;
-
-        }
-        Product newProduct = new Product(productName, nextID, baseCost, numberOfProducts, desciption);
-        productRepository.addElement(newProduct);
-
-        return newProduct;
+        Product product = new Product(productName, baseCost, numberOfProducts, desciption);
+        return productRepository.saveProduct(product);
 
     }
 
-    public ArrayList<Product> findAllProducts(Predicate<Product> predicate){
-        Predicate<Product> productPredicate = product -> {
-            return predicate.test(product) && !product.isArchived();
-        };
-        return productRepository.find(productPredicate);
+    public List<Product> getAllProducts() {
+        return productRepository.findAllProducts();
     }
 
-    public ArrayList<Product> findAllProducts() {
-        return productRepository.findAll();
-    }
-
-    public void unregister(int id){
-        getProduct(id).setArchived(true);
-    }
-
-    public Product getProductByNumber(int number){
-        return productRepository.getElement(number);
+    public Product unregister(Long id){
+        return productRepository.archiveProduct(id);
     }
 
 }
