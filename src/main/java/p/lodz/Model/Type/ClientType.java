@@ -19,4 +19,8 @@ public abstract class ClientType {
 
     public abstract double getClientDiscount();
     public abstract int getShorterDeliveryTime();
+
+    public Long getId() {
+        return id;
+    }
 }
