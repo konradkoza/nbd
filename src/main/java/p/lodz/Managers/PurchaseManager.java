@@ -31,6 +31,17 @@ public class PurchaseManager {
         return purchaseRepository.savePurchase(purchase);
     }
 
+    public Purchase registerPurchase(Client customer, Product product){
+        Purchase purchase = new Purchase(customer, product);
+
+        product = productRepository.decrementNumberOfProducts(product.getId());
+        if (product.getNumberOfProducts() == 0) {
+            productRepository.archiveProduct(product.getId());
+        }
+
+        return purchaseRepository.savePurchase(purchase);
+    }
+
     public List<Purchase> findAllPurchases() {
         return purchaseRepository.findAllPurchases();
     }
