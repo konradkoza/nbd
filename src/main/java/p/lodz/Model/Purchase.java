@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -41,6 +42,16 @@ public class Purchase {
         this.client = client;
         this.product = product;
         this.productAmount = amount;
+        purchaseDate = LocalDate.now();
+        setDeliveryTime();
+        setFinalCost();
+        client.addMoneySpent(finalCost);
+    }
+
+    public Purchase(Client client, Product product) {
+        this.client = client;
+        this.products = new ArrayList<>();
+        this.products.add(product);
         purchaseDate = LocalDate.now();
         setDeliveryTime();
         setFinalCost();

@@ -21,7 +21,6 @@ public class ProductManager {
     public Product registerProduct(String productName, double baseCost, int numberOfProducts, String desciption){
         Product product = new Product(productName, baseCost, numberOfProducts, desciption);
         return productRepository.saveProduct(product);
-
     }
 
     public List<Product> getAllProducts() {

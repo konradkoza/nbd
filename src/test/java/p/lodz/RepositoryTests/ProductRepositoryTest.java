@@ -20,6 +20,7 @@ public class ProductRepositoryTest {
     static void initTest() {
         emf = Persistence.createEntityManagerFactory("test");
         em = emf.createEntityManager();
+        em.getTransaction().begin();
         productRepository = new ProductRepositoryImpl(em);
     }
 
@@ -43,8 +44,20 @@ public class ProductRepositoryTest {
         assertThrows(RuntimeException.class, () -> {productRepository.decrementNumberOfProducts(savedProduct.getId(),2);});
     }
 
+    @Test
+    void findProductByIdTest() {
+        Product savedProduct = productRepository.saveProduct(new Product("aaa", 1, 1, "aaa"));
+        assertEquals(savedProduct, productRepository.findProductById(savedProduct.getId()));
+    }
+
+    @Test
+    void findAllProductsTest() {
+        assertEquals(3, productRepository.findAllProducts().size());
+    }
+
     @AfterAll
     static void endTest() {
+        em.getTransaction().commit();
         if(emf != null) emf.close();
     }
 }

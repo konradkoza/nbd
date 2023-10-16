@@ -38,8 +38,9 @@ public class ClientRepositoryImpl implements ClientRepository {
     }
 
     @Override
-    public List<Client> findAllClients() {
-        Query query = em.createQuery("SELECT c FROM Client c");
+    public List<Client> findAllClients(boolean archived) {
+        Query query = em.createQuery("SELECT c FROM Client c WHERE c.archived = :ar");
+        query.setParameter("ar", archived);
         return query.getResultList();
     }
 }
