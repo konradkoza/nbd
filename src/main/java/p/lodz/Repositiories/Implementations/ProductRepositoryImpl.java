@@ -31,12 +31,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Product decrementNumberOfProducts(Long id,int amount ) {
+    public Product decrementNumberOfProducts(Long id) {
         Product product = em.find(Product.class, id);
         if (product != null) {
             int nop = product.getNumberOfProducts();
-            if(nop - amount >= 0) {
-                product.setNumberOfProducts(nop - amount);
+            if(nop > 0) {
+                product.setNumberOfProducts(nop - 1);
                 em.merge(product);
             } else {
                 throw new RuntimeException("Liczba produktów nie moze byc mniejsza od 0");
@@ -55,4 +55,5 @@ public class ProductRepositoryImpl implements ProductRepository {
         Query query = em.createQuery("SELECT p FROM Product p");
         return query.getResultList();
     }
+
 }

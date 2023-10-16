@@ -10,4 +10,5 @@ public interface PurchaseRepository {
     List<Purchase> findAllPurchases();
     Purchase savePurchase(Purchase purchase);
     List<Purchase> findAllClientPurchases(Client client);
+
 }

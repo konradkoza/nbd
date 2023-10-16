@@ -40,8 +40,9 @@ public class ProductRepositoryTest {
     @Test
     void decrementNumberOfProductTest() {
         Product savedProduct = productRepository.saveProduct(new Product("aaa", 1, 1, "aaa"));
-        assertEquals(1, savedProduct.getNumberOfProducts());
-        assertThrows(RuntimeException.class, () -> {productRepository.decrementNumberOfProducts(savedProduct.getId(),2);});
+        Product productAfterDecrement = productRepository.decrementNumberOfProducts(savedProduct.getId());
+        assertEquals(0, productAfterDecrement.getNumberOfProducts());
+        assertThrows(RuntimeException.class, () -> {productRepository.decrementNumberOfProducts(savedProduct.getId());});
     }
 
     @Test

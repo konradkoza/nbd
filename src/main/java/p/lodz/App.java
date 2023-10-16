@@ -29,6 +29,8 @@ public class App {
             shop.getProductManager().registerProduct("bbb", 10, 1, "ccdd");
             shop.getClientManager().registerClient("bbb", "cccc", "wwa", "ullica", "10", new Standard());
             shop.getPurchaseManager().registerPurchase(shop.getClientManager().getClient(2L), shop.getProductManager().getProduct(2L));
+            //test czy rzuci wyjatek gdy nie ma juz produktu
+            //shop.getPurchaseManager().registerPurchase(shop.getClientManager().getClient(1L), shop.getProductManager().getProduct(2L));
             System.out.println(shop.getPurchaseManager().getAllClientPurchases(shop.getClientManager().getClient(2L)));
             System.out.println(shop.getClientManager().getClient(2L));
             em.getTransaction().commit();

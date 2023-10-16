@@ -29,30 +29,9 @@ public class PurchaseRepositoryImpl implements PurchaseRepository {
 
     @Override
     public Purchase savePurchase(Purchase purchase) {
-
-         /*Product product = em.find(Product.class, purchase.getProduct().getId());
-        if (product != null) {
-            int nop = product.getNumberOfProducts();
-            if(nop - purchase.getProductAmount() >= 0) {
-                product.setNumberOfProducts(nop - purchase.getProductAmount());
-                em.merge(product);
-            } else {
-                throw new RuntimeException("Liczba produktów nie moze byc mniejsza od 0");
-            }
-        } */
-
-
-        purchase.getProduct().reduceNumberOfProducts(purchase.getProductAmount());
-        if(purchase.getProduct().getNumberOfProducts() <0) {
-            throw new RuntimeException("Liczba produktow nie moze byc <0");
-        }
-       if(purchase.getId() == null) {
-           em.persist(purchase);
-       }
-       else {
-           purchase = em.merge(purchase);
-       }
-       return purchase;
+        if(purchase.getId() == null) em.persist(purchase);
+        else purchase = em.merge(purchase);
+        return purchase;
     }
 
     @Override
@@ -61,4 +40,5 @@ public class PurchaseRepositoryImpl implements PurchaseRepository {
         query.setParameter("client", client);
         return query.getResultList();
     }
+
 }
