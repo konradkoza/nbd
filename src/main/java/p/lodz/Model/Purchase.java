@@ -26,15 +26,21 @@ public class Purchase {
     @Column(name = "final_cost")
     private double finalCost;
 
+    @Column(name = "product_amount")
+    private int productAmount;
+
+
     @ManyToOne
     private Client client;
 
-    @ManyToMany
-    private List<Product> products;
+    @ManyToOne
+    private Product product;
 
-    public Purchase(Client client, List<Product> products) {
+
+    public Purchase(Client client, Product product,int amount) {
         this.client = client;
-        this.products = products;
+        this.product = product;
+        this.productAmount = amount;
         purchaseDate = LocalDate.now();
         setDeliveryTime();
         setFinalCost();
@@ -46,11 +52,13 @@ public class Purchase {
     }
 
     private void setFinalCost(){
-        for(Product product : products) {
             finalCost += product.getBaseCost() -
                     product.getBaseCost() * product.getDiscount() -
                     client.getClientDiscount() * product.getBaseCost();
-        }
+
+    }
+    private void reduceNumberOfProducts(int number) {
+        this.productAmount -= number;
     }
 
     @Override
@@ -61,7 +69,7 @@ public class Purchase {
                 .add("deliveryDate", deliveryDate)
                 .add("finalCost", finalCost)
                 .add("client", client)
-                .add("product", products)
+                .add("product",product)
                 .toString();
     }
 }

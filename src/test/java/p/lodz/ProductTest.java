@@ -48,7 +48,7 @@ public class ProductTest {
         public void numberOfProductsTest() {
             assertFalse(testProduct1.isArchived());
             assertEquals(numberOfProducts1, testProduct1.getNumberOfProducts());
-            testProduct1.reduceNumberOfProducts();
+            testProduct1.reduceNumberOfProducts(1);
             assertTrue(testProduct1.isArchived());
             assertEquals(0, testProduct1.getNumberOfProducts());
             testProduct1.setNumberOfProducts(1);

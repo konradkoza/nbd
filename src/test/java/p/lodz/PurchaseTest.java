@@ -32,16 +32,10 @@ public class PurchaseTest {
     ;
     private Product product = new Product(testProductName1, baseCost1, numberOfProducts1, description1);
     ;
-    private Purchase purchase = new Purchase(client, new ArrayList<Product>() {
-        {
-            add(product);
-        }
-    });
-    private Purchase purchase1 = new Purchase(client, new ArrayList<Product>() {
-        {
-            add(product);
-        }
-    });
+    private Purchase purchase = new Purchase(client, product,1) ;
+
+    private Purchase purchase1 = new Purchase(client, product,2);
+
 
 
 
@@ -49,9 +43,9 @@ public class PurchaseTest {
     public void finalCostTest() {
         double finalCost = product.getBaseCost() - product.getBaseCost() * product.getDiscount() - product.getBaseCost() * client.getClientDiscount();
         assertEquals(finalCost, purchase.getFinalCost(), 0.01);
-        purchase.getProducts().get(0).setDiscount(0.5);
+        purchase.getProduct().setDiscount(0.5);
         assertEquals(finalCost, purchase.getFinalCost(), 0.01);
-        purchase.getProducts().get(0).setBaseCost(2000000000.00);
+        purchase.getProduct().setBaseCost(2000000000.00);
         assertEquals(finalCost, purchase.getFinalCost(), 0.01);
     }
 

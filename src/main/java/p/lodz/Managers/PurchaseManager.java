@@ -18,8 +18,8 @@ public class PurchaseManager {
         return purchaseRepository.findPurchaseById(id);
     }
 
-    public Purchase registerPurchase(Client customer, List<Product> products){
-        Purchase purchase = new Purchase(customer, products);
+    public Purchase registerPurchase(Client customer, Product product,int amount){
+        Purchase purchase = new Purchase(customer, product,amount);
         return purchaseRepository.savePurchase(purchase);
     }
 

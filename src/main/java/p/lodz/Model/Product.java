@@ -36,8 +36,8 @@ public class Product {
         this.desciption = desciption;
     }
 
-    public void reduceNumberOfProducts(){
-        numberOfProducts -= 1;
+    public void reduceNumberOfProducts(int amount){
+        numberOfProducts -= amount;
         if(numberOfProducts <= 0){
             setArchived(true);
         }

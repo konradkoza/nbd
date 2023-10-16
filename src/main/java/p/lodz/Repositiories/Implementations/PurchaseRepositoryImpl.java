@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import p.lodz.Model.Client;
+import p.lodz.Model.Product;
 import p.lodz.Model.Purchase;
 import p.lodz.Repositiories.PurchaseRepository;
 
@@ -28,8 +29,29 @@ public class PurchaseRepositoryImpl implements PurchaseRepository {
 
     @Override
     public Purchase savePurchase(Purchase purchase) {
-       if(purchase.getId() == null) em.persist(purchase);
-       else purchase = em.merge(purchase);
+
+         /*Product product = em.find(Product.class, purchase.getProduct().getId());
+        if (product != null) {
+            int nop = product.getNumberOfProducts();
+            if(nop - purchase.getProductAmount() >= 0) {
+                product.setNumberOfProducts(nop - purchase.getProductAmount());
+                em.merge(product);
+            } else {
+                throw new RuntimeException("Liczba produktów nie moze byc mniejsza od 0");
+            }
+        } */
+
+
+        purchase.getProduct().reduceNumberOfProducts(purchase.getProductAmount());
+        if(purchase.getProduct().getNumberOfProducts() <0) {
+            throw new RuntimeException("Liczba produktow nie moze byc <0");
+        }
+       if(purchase.getId() == null) {
+           em.persist(purchase);
+       }
+       else {
+           purchase = em.merge(purchase);
+       }
        return purchase;
     }
 

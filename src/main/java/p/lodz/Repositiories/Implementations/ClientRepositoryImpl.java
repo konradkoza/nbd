@@ -2,6 +2,7 @@ package p.lodz.Repositiories.Implementations;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
 import p.lodz.Model.Client;
 import p.lodz.Repositiories.ClientRepository;
 
@@ -17,6 +18,7 @@ public class ClientRepositoryImpl implements ClientRepository {
     public Client saveClient(Client client) {
         if(client.getId() == null) em.persist(client);
         else client = em.merge(client);
+
         return client;
     }
 

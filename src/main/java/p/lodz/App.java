@@ -17,32 +17,36 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-//        Shop sklep = new Shop();
-//        Product test = sklep.getProductManager().registerProduct("test", 100, 1, "test");
-//        Product test1 = sklep.getProductManager().registerProduct("test1", 100, 10, "test");
+
+
 //        Product test2 = sklep.getProductManager().registerProduct("test2", 100, 10, "test");
-//        Address address = new Address("Warszawa", "aaa", "777");
+        Address address = new Address("Warszawa", "aaa", "777");
 //        ClientType clientType = new Standard();
 //        ClientType clientType1 = new Premium();
-//        Client jan = new Client("Jan", "Kowalski", address, clientType);
+
 //        Client jan1 = new Client("Jan", "Kowalski", address, clientType1);
-//        List<Product> products = new ArrayList<>();
-//        products.add(test);
-//        products.add(test1);
+
 //        List<Product> products1 = new ArrayList<>();
 //        products1.add(test2);
 //        Purchase zakup =  sklep.getPurchaseManager().registerPurchase(jan, products);
 //        Purchase zakup1 =  sklep.getPurchaseManager().registerPurchase(jan, products1);
 //        System.out.println(zakup.toString());
 //
-//        try(EntityManagerFactory emf = Persistence.createEntityManagerFactory("test")) {
-//            EntityManager em = emf.createEntityManager();
-//            em.getTransaction().begin();
-//            em.merge(clientType);
-//            ClientManager clientManager = new ClientManager(em);
-//            clientManager.registerClient("Jan", "Kowalski", "Warszawa", "aaa", "777", clientType);
-//            em.getTransaction().commit();
+       try(EntityManagerFactory emf = Persistence.createEntityManagerFactory("test")) {
+           EntityManager em = emf.createEntityManager();
+           Shop sklep = new Shop(em);
+           ClientType clientType = new Premium();
+           Product test = sklep.getProductManager().registerProduct("test", 100, 10, "test");
+           Product test2 = sklep.getProductManager().registerProduct("jablko", 100, 10, "test");
+
+           Client jan = new Client("Jan", "Kowalski", address, clientType);
+           em.getTransaction().begin();
+            em.merge(clientType);
+            em.merge(jan);
+            sklep.getPurchaseManager().registerPurchase(jan,test,9);
+            sklep.getPurchaseManager().registerPurchase(jan,test2,3);
+            em.getTransaction().commit();
 //
-//        }
+        }
     }
 }
