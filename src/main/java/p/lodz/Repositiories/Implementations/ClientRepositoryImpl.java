@@ -16,18 +16,23 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     public Client saveClient(Client client) {
+        em.getTransaction().begin();
         if(client.getId() == null) em.persist(client);
         else client = em.merge(client);
-
+        em.getTransaction().commit();
         return client;
     }
 
     @Override
     public Client archiveClient(Long id) {
+        em.getTransaction().begin();
         Client client = em.find(Client.class, id);
         if (client != null) {
             client.setArchived(true);
             em.merge(client);
+            em.getTransaction().commit();
+        } else {
+            em.getTransaction().rollback();
         }
         return client;
     }

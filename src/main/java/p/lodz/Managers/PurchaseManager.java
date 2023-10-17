@@ -27,37 +27,41 @@ public class PurchaseManager {
     }
 
     public Purchase registerPurchase(Client customer, List<Product> products){
+        em.getTransaction().begin();
+        if (products.isEmpty()) {
+            throw new RuntimeException("Nie można zrealizować zamówienia.");
+        }
         Iterator<Product> iterator = products.iterator();
-
         while (iterator.hasNext()) {
             Product product = iterator.next();
-            Product lockedProduct = em.find(Product.class,product.getId(),LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-            productRepository.decrementNumberOfProducts(lockedProduct.getId());
-            if(lockedProduct.isArchived()) {
+            if(product.isArchived()) {
                 iterator.remove();
             }
-            else if (lockedProduct.getNumberOfProducts() == 0) {
-                productRepository.archiveProduct(lockedProduct.getId());
+            productRepository.decrementNumberOfProducts(product.getId());
+            if (product.getNumberOfProducts() == 0) {
+                productRepository.archiveProduct(product.getId());
             }
         }
-            if (products.isEmpty()) {
-                throw new RuntimeException("Nie można zrealizować zamówienia.");
-            }
             Purchase purchase = new Purchase(customer, products);
-            return purchaseRepository.savePurchase(purchase);
+            purchase = purchaseRepository.savePurchase(purchase);
+            em.getTransaction().commit();
+            return purchase;
         }
 
     public Purchase registerPurchase(Client customer, Product product){
-        Product lockedProduct = em.find(Product.class,product.getId(),LockModeType.OPTIMISTIC_FORCE_INCREMENT);
-        productRepository.decrementNumberOfProducts(lockedProduct.getId());
-        if(lockedProduct.isArchived()) {
+        em.getTransaction().begin();
+        if(product.isArchived()) {
             throw new RuntimeException("Nie mozna zrealizowac zamowienia");
+        } else {
+            productRepository.decrementNumberOfProducts(product.getId());
+            if (product.getNumberOfProducts() == 0) {
+                productRepository.archiveProduct(product.getId());
+            }
         }
-        else if (lockedProduct.getNumberOfProducts() == 0) {
-            productRepository.archiveProduct(lockedProduct.getId());
-        }
-        Purchase purchase = new Purchase(customer,lockedProduct);
-        return purchaseRepository.savePurchase(purchase);
+        Purchase purchase = new Purchase(customer,product);
+        purchase =  purchaseRepository.savePurchase(purchase);
+        em.getTransaction().commit();
+        return purchase;
     }
 
     public List<Purchase> findAllPurchases() {

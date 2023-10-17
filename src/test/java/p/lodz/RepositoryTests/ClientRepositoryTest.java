@@ -29,7 +29,7 @@ public class ClientRepositoryTest {
         em = emf.createEntityManager();
         clientRepository = new ClientRepositoryImpl(em);
         clientTypeRepository = new ClientTypeRepositoryImpl(em);
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
     }
 
     @Test
@@ -70,7 +70,7 @@ public class ClientRepositoryTest {
 
     @AfterAll
     static void endTest() {
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         if(emf != null) emf.close();
     }
 }

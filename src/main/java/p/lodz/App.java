@@ -21,7 +21,7 @@ public class App {
         try(EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
             EntityManager em = emf.createEntityManager()) {
 
-            em.getTransaction().begin();
+//            em.getTransaction().begin();
             Shop shop = new Shop(em);
             shop.getProductManager().registerProduct("aaa", 10, 1, "aabb");
             shop.getClientManager().registerClient("aaa", "bbbb", "wwa", "ullica", "10", new Standard());
@@ -34,7 +34,7 @@ public class App {
             //shop.getPurchaseManager().registerPurchase(shop.getClientManager().getClient(1L), shop.getProductManager().getProduct(2L));
             System.out.println(shop.getPurchaseManager().getAllClientPurchases(shop.getClientManager().getClient(2L)));
             System.out.println(shop.getClientManager().getClient(2L));
-            em.getTransaction().commit();
+//            em.getTransaction().commit();
         }
     }
 }

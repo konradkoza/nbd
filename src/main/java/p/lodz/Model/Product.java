@@ -16,6 +16,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Version
+    private Integer version;
+
+
     @Column(name = "product_name")
     private String productName;
     @Column(name = "base_cost")
