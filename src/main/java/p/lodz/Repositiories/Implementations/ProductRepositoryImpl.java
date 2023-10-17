@@ -28,14 +28,14 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public Product archiveProduct(Long id) {
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         Product product = em.find(Product.class, id);
         if (product != null) {
             product.setArchived(true);
             em.merge(product);
-            em.getTransaction().commit();
+//            em.getTransaction().commit();
         } else {
-            em.getTransaction().rollback();
+//            em.getTransaction().rollback();
         }
         return product;
     }

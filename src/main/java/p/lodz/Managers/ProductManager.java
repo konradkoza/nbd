@@ -10,8 +10,10 @@ import java.util.List;
 
 public class ProductManager {
     private final ProductRepository productRepository;
+    private final EntityManager em;
     public ProductManager(EntityManager em) {
         this.productRepository = new ProductRepositoryImpl(em);
+        this.em = em;
     }
 
     public Product getProduct(Long id){
@@ -27,8 +29,8 @@ public class ProductManager {
         return productRepository.findAllProducts();
     }
 
-    public Product unregister(Long id){
-        return productRepository.archiveProduct(id);
-    }
+//    public Product unregister(Long id){
+//        return productRepository.archiveProduct(id);
+//    }
 
 }
