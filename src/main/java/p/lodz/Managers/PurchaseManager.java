@@ -28,18 +28,20 @@ public class PurchaseManager {
 
     public Purchase registerPurchase(Client customer, List<Product> products){
         em.getTransaction().begin();
+
         if (products.isEmpty()) {
             throw new RuntimeException("Nie można zrealizować zamówienia.");
         }
         Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext()) {
             Product product = iterator.next();
-            if(product.isArchived()) {
+            Product lockedProduct = em.find(Product.class,product.getId(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+            if(lockedProduct.isArchived()) {
                 iterator.remove();
             }
-            productRepository.decrementNumberOfProducts(product.getId());
-            if (product.getNumberOfProducts() == 0) {
-                productRepository.archiveProduct(product.getId());
+            productRepository.decrementNumberOfProducts(lockedProduct.getId());
+            if (lockedProduct.getNumberOfProducts() == 0) {
+                productRepository.archiveProduct(lockedProduct.getId());
             }
         }
             Purchase purchase = new Purchase(customer, products);
@@ -50,15 +52,16 @@ public class PurchaseManager {
 
     public Purchase registerPurchase(Client customer, Product product){
         em.getTransaction().begin();
-        if(product.isArchived()) {
+        Product lockedProduct = em.find(Product.class,product.getId(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        if(lockedProduct.isArchived()) {
             throw new RuntimeException("Nie mozna zrealizowac zamowienia");
         } else {
-            productRepository.decrementNumberOfProducts(product.getId());
-            if (product.getNumberOfProducts() == 0) {
-                productRepository.archiveProduct(product.getId());
+            productRepository.decrementNumberOfProducts(lockedProduct.getId());
+            if (lockedProduct.getNumberOfProducts() == 0) {
+                productRepository.archiveProduct(lockedProduct.getId());
             }
         }
-        Purchase purchase = new Purchase(customer,product);
+        Purchase purchase = new Purchase(customer,lockedProduct);
         purchase =  purchaseRepository.savePurchase(purchase);
         em.getTransaction().commit();
         return purchase;

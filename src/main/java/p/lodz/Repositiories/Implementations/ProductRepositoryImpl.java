@@ -43,7 +43,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product decrementNumberOfProducts(Long id) {
 //        em.getTransaction().begin();
-        Product product = em.find(Product.class,id, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        Product product = em.find(Product.class,id);
         if (product != null) {
             int nop = product.getNumberOfProducts();
             if(nop > 0) {
