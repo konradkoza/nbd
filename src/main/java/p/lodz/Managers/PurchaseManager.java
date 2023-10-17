@@ -30,6 +30,7 @@ public class PurchaseManager {
         em.getTransaction().begin();
 
         if (products.isEmpty()) {
+            em.getTransaction().rollback();
             throw new RuntimeException("Nie można zrealizować zamówienia.");
         }
         Iterator<Product> iterator = products.iterator();
@@ -54,6 +55,7 @@ public class PurchaseManager {
         em.getTransaction().begin();
         Product lockedProduct = em.find(Product.class,product.getId(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
         if(lockedProduct.isArchived()) {
+            em.getTransaction().rollback();
             throw new RuntimeException("Nie mozna zrealizowac zamowienia");
         } else {
             productRepository.decrementNumberOfProducts(lockedProduct.getId());
