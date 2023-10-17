@@ -18,8 +18,9 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        try(EntityManagerFactory emf = Persistence.createEntityManagerFactory("test")) {
-            EntityManager em = emf.createEntityManager();
+        try(EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
+            EntityManager em = emf.createEntityManager()) {
+
             em.getTransaction().begin();
             Shop shop = new Shop(em);
             shop.getProductManager().registerProduct("aaa", 10, 1, "aabb");
