@@ -1,6 +1,7 @@
 package p.lodz.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,7 @@ public class Purchase {
     private LocalDate deliveryDate;
 
     @Column(name = "final_cost")
+    @Min(value = 0)
     private double finalCost;
 
     @ManyToOne

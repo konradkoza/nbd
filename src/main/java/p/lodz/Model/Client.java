@@ -1,6 +1,9 @@
 package p.lodz.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,20 +17,28 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull
     @Column(name = "first_name")
+    @Size(min = 3, max = 20)
     private String firstName;
+
+    @NotNull
     @Column(name = "last_name")
+    @Size(min = 3, max = 20)
     private String lastName;
 
     @Embedded
     Address address;
 
     @ManyToOne
+    @NotNull
     ClientType clientType;
 
     private boolean archived = false;
 
-    private double moneySpent;
+    @Min(value = 0, message = "Money spent cannot be less than 0")
+    private double moneySpent = 0;
 
     public Client(String firstName, String lastName, Address address, ClientType clientType) {
         this.firstName = firstName;

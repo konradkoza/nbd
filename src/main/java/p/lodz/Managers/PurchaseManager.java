@@ -2,6 +2,8 @@ package p.lodz.Managers;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
+import jakarta.validation.Validator;
+import p.lodz.Exceptions.InvalidPurchaseException;
 import p.lodz.Model.*;
 import p.lodz.Repositiories.Implementations.ProductRepositoryImpl;
 import p.lodz.Repositiories.Implementations.PurchaseRepositoryImpl;
@@ -28,10 +30,9 @@ public class PurchaseManager {
 
     public Purchase registerPurchase(Client customer, List<Product> products){
         em.getTransaction().begin();
-
         if (products.isEmpty()) {
             em.getTransaction().rollback();
-            throw new RuntimeException("Nie można zrealizować zamówienia.");
+            throw new InvalidPurchaseException("The order cannot be processed. Products list is empty.");
         }
         Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext()) {
@@ -45,18 +46,18 @@ public class PurchaseManager {
                 productRepository.archiveProduct(lockedProduct.getId());
             }
         }
-            Purchase purchase = new Purchase(customer, products);
-            purchase = purchaseRepository.savePurchase(purchase);
-            em.getTransaction().commit();
-            return purchase;
-        }
+        Purchase purchase = new Purchase(customer, products);
+        purchase = purchaseRepository.savePurchase(purchase);
+        em.getTransaction().commit();
+        return purchase;
+    }
 
     public Purchase registerPurchase(Client customer, Product product){
         em.getTransaction().begin();
         Product lockedProduct = em.find(Product.class,product.getId(), LockModeType.OPTIMISTIC_FORCE_INCREMENT);
         if(lockedProduct.isArchived()) {
             em.getTransaction().rollback();
-            throw new RuntimeException("Nie mozna zrealizowac zamowienia");
+            throw new InvalidPurchaseException("The order cannot be processed. Product is Archived.");
         } else {
             productRepository.decrementNumberOfProducts(lockedProduct.getId());
             if (lockedProduct.getNumberOfProducts() == 0) {
@@ -73,7 +74,7 @@ public class PurchaseManager {
         return purchaseRepository.findAllPurchases();
     }
 
-    public List<Purchase> getAllClientPurchases(Client client){
+    public List<Purchase> getAllClientPurchases(Client client) {
         return purchaseRepository.findAllClientPurchases(client);
     }
 }
